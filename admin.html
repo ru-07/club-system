@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <title>社團管理後台｜學生社團門戶系統</title>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    >
+
+    <style>
+      .navbar-brand { font-weight: bold; }
+      .container { margin-top: 30px; }
+    </style>
+
+    <script>
+      // 進入頁面後立即檢查密碼
+      (function() {
+        const pwd = prompt("安全檢查：請輸入管理員密碼以顯示資料");
+        if (pwd !== "sss555") {
+          alert("密碼錯誤！將返回首頁。");
+          window.location.href = "index.html";
+          document.documentElement.style.display = 'none';
+        }
+      })();
+    </script>
+  </head>
+
+  <body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark shadow-sm">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">⚙️ 社團管理後台</span>
+        <button class="btn btn-outline-light btn-sm" onclick="navToIndex()">返回首頁入口</button>
+      </div>
+    </nav>
+
+    <div class="container bg-white shadow p-4 rounded">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-secondary">申請名單管理</h3>
+        <span class="badge bg-info text-dark">模擬資料</span>
+      </div>
+      
+      <table class="table table-hover align-middle">
+        <thead class="table-secondary">
+          <tr>
+            <th>學號</th><th>姓名</th><th>社團</th><th>狀態</th><th>快速操作</th>
+          </tr>
+        </thead>
+        <tbody id="list-body">
+          <tr><td colspan="5" class="text-center text-muted">正在載入模擬資料...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script>
+      // 模擬資料
+      const mockData = [
+        ["1", "A001", "小明", "熱音社", "審核中"],
+        ["2", "A002", "小華", "程式設計社", "錄取"],
+        ["3", "A003", "小美", "攝影社", "審核中"]
+      ];
+
+      function renderList(data) {
+        let html = '';
+        if (data.length === 0) {
+          html = '<tr><td colspan="5" class="text-center">目前尚無申請資料</td></tr>';
+        } else {
+          data.forEach(item => {
+            html += `<tr>
+              <td>${item[1]}</td>
+              <td>${item[2]}</td>
+              <td>${item[3]}</td>
+              <td><span class="badge ${item[4]=='錄取'?'bg-success':'bg-warning text-dark'}">${item[4]}</span></td>
+              <td>
+                <button class="btn btn-primary btn-sm me-1" onclick="changeStatus('${item[0]}','錄取')">錄取</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteItem('${item[0]}')">刪除</button>
+              </td>
+            </tr>`;
+          });
+        }
+        document.getElementById('list-body').innerHTML = html;
+      }
+
+      // 模擬操作
+      function changeStatus(id, status) {
+        if(confirm('確定將此學員狀態改為「錄取」嗎？')) {
+          alert(`ID ${id} 狀態已更改為「${status}」`);
+          // 模擬刷新
+          renderList(mockData);
+        }
+      }
+
+      function deleteItem(id) {
+        if(confirm('此動作無法復原，確定要刪除這筆報名資料嗎？')) {
+          alert(`ID ${id} 已刪除`);
+          // 模擬刷新
+          renderList(mockData.filter(item => item[0] !== id));
+        }
+      }
+
+      function navToIndex() {
+        window.location.href = "index.html";
+      }
+
+      // 載入頁面時顯示模擬資料
+      window.onload = () => {
+        renderList(mockData);
+      };
+    </script>
+  </body>
+</html>
