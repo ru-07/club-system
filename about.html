@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8">
+    <title>社團介紹｜學生社團門戶系統</title>
+
+    <!-- Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    >
+
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+
+      .club-card {
+        transition: 0.3s;
+        border-left: 5px solid #0d6efd;
+      }
+
+      .club-card:hover {
+        background-color: #e9ecef;
+      }
+    </style>
+  </head>
+
+  <body class="p-4">
+    <div class="container bg-white shadow p-4 rounded">
+
+      <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-2">
+        <h2 class="text-primary fw-bold">
+          🔍 7 大特色社團介紹
+        </h2>
+        <button class="btn btn-outline-secondary" onclick="navBack()">
+          回首頁
+        </button>
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12">
+          <div class="card p-3 club-card">
+            <h5>🎸 熱音社</h5>
+            <p>提供專業練團室，每年固定舉辦期初與期末成果發表會。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#6610f2;">
+            <h5>💃 現代舞社</h5>
+            <p>由專業導師帶領，從零基礎開始學習各種舞風。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#198754;">
+            <h5>🏀 籃球社</h5>
+            <p>定期舉辦校內聯賽，與外校進行友誼賽交流技術。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#20c997;">
+            <h5>💻 程式設計社</h5>
+            <p>學習網頁開發、AI 應用，並參與各類黑客松競賽。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#fd7e14;">
+            <h5>📸 攝影社</h5>
+            <p>走訪全台景點外拍，學習構圖、修圖與光影運用。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#6f42c1;">
+            <h5>☕ 咖啡品評社</h5>
+            <p>認識世界各國手沖豆，學習拉花技巧與品飲文化。</p>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="card p-3 club-card" style="border-color:#0dcaf0;">
+            <h5>🏸 羽球社</h5>
+            <p>熱血揮灑汗水，提供多個場地供社員切磋球技。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function navBack() {
+        // 回到 GitHub Pages 的首頁
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
