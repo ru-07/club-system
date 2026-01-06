@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>社團留言板</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    body { background-color: #f8f9fa; font-family: "Microsoft JhengHei", sans-serif; }
+    .comment-card {
+      border-left: 4px solid #0d6efd;
+      margin-bottom: 15px;
+      background: white;
+    }
+  </style>
+</head>
+
+<body class="p-4">
+<div class="container bg-white shadow-sm p-4 rounded">
+  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+    <h2 class="text-primary fw-bold" id="club-title">載入中...</h2>
+    <button class="btn btn-outline-secondary" onclick="history.back()">返回</button>
+  </div>
+
+  <h4 class="mb-3">💬 社員留言板</h4>
+  <div id="comment-list" class="mb-5 text-muted">載入中...</div>
+
+  <div class="card p-4 bg-light border-0">
+    <h5 class="mb-3">✍️ 發表留言</h5>
+    <input id="nickname" class="form-control mb-2" placeholder="暱稱（選填）">
+    <textarea id="content" class="form-control mb-3" rows="4" placeholder="留言內容"></textarea>
+    <button class="btn btn-primary w-100" onclick="submitComment()">送出留言</button>
+  </div>
+</div>
+
+<script>
+/* 🔧 改成你的 GAS Web App URL */
+const API_URL = "https://script.google.com/macros/s/你的ID/exec";
+
+const params = new URLSearchParams(location.search);
+const club = params.get("club") || "未知社團";
+document.getElementById("club-title").innerText = club;
+
+function loadComments() {
+  fetch(`${API_URL}?action=list&club=${encodeURIComponent(club)}`)
+    .then(res => res.json())
+    .then(renderComments)
+    .catch(() => {
+      document.getElementById("comment-list").innerHTML =
+        '<div class="alert alert-danger">載入失敗</div>';
+    });
+}
+
+function renderComments(comments) {
+  if (!comments.length) {
+    document.getElementById("comment-list").innerHTML =
+      '<div class="alert alert-info">目前還沒有留言</div>';
+    return;
+  }
+
+  document.getElementById("comment-list").innerHTML =
+    comments.map(c => `
+      <div class="card comment-card p-3">
+        <div class="d-flex justify-content-between">
+          <strong>${c.nickname || "匿名"}</strong>
+          <small>${new Date(c.created_at).toLocaleString("zh-TW")}</small>
+        </div>
+        <p class="mt-2">${c.content}</p>
+      </div>
+    `).join("");
+}
+
+function submitComment() {
+  const payload = {
+    action: "add",
+    club,
+    nickname: document.getElementById("nickname").value || "匿名",
+    content: document.getElementById("content").value
+  };
+
+  fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(payload)
+  })
+  .then(() => {
+    document.getElementById("content").value = "";
+    loadComments();
+  });
+}
+
+loadComments();
+</script>
+</body>
+</html>
